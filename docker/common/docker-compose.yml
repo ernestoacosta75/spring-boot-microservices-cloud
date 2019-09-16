@@ -1,11 +1,12 @@
 version: '2'
 services:
   configserver:
-    image: johncarnell/tmx-confsvr:chapter3
+    image: eara/tmx-confsvr:chapter3
     ports:
        - "8888:8888"
     environment:
       ENCRYPT_KEY:       "IMSYMMETRIC"
+
   database:
     image: postgres:9.5
     ports:
@@ -14,8 +15,12 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "p0stgr@s"
       POSTGRES_DB:       "eagle_eye_local"
+
   licensingservice:
-    image: johncarnell/tmx-licensing-service:chapter3
+    depends_on:
+      - configserver
+      - database
+    image: eara/tmx-licensing-service:chapter3
     ports:
       - "8080:8080"
     environment:
