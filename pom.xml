@@ -9,7 +9,7 @@
 
 
   <name>thoughtmechanix-parent-pom</name>
-  <description>Parent Pom for the thoughtmechanix project</description>
+  <description>Parent Pom for the Thoughtmechanix Project</description>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -28,7 +28,7 @@
         <version>0.4.10</version>
         <configuration>
         <baseImage>java</baseImage>
-        <imageName>example</imageName>
+        <imageName>eagle-eyes</imageName>
       </configuration>
       </plugin>
     </plugins>
