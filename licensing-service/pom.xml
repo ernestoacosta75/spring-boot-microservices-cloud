@@ -23,6 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>com.thoughtmechanix.licenses.Application</start-class>
         <spring.cloud.dependencies.version>Greenwich.RELEASE</spring.cloud.dependencies.version>
+        <spring.cloud.eureka.starter.server.version>1.4.7.RELEASE</spring.cloud.eureka.starter.server.version>
         <postgresql.version>9.1-901.jdbc4</postgresql.version>
         <maven.enforcer.plugin.version>3.0.0-M2</maven.enforcer.plugin.version>
         <docker.maven.plugin.version>0.4.10</docker.maven.plugin.version>
@@ -64,6 +65,16 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-config-client</artifactId>
     </dependency>
+
+      <!-- Includes the Eureka libraries so that the service
+       can register with Eureka. These libraries holds the jar
+       files that Spring Cloud will use to interact with the  Eureka service.-->
+      <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-starter-eureka</artifactId>
+          <version>${spring.cloud.eureka.starter.server.version}</version>
+      </dependency>
+
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
