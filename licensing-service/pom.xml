@@ -27,7 +27,7 @@
         <maven.enforcer.plugin.version>3.0.0-M2</maven.enforcer.plugin.version>
         <docker.maven.plugin.version>0.4.10</docker.maven.plugin.version>
         <docker.image.name>eara/tmx-licensing-service</docker.image.name>
-        <docker.image.tag>chapter3</docker.image.tag>
+        <docker.image.tag>chapter4</docker.image.tag>
     </properties>
 
   <dependencyManagement>

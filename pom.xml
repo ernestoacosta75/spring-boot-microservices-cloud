@@ -23,6 +23,8 @@
   <modules>
     <module>confsvr</module>
     <module>licensing-service</module>
+      <module>eurekasvr</module>
+    <module>organization-service</module>
   </modules>
   <build>
     <plugins>

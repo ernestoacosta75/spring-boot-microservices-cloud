@@ -1,0 +1,41 @@
+# This configuration file is needed to set up the Eureka service running in
+# standalone mode (for example, no other nodes in the cluster).
+
+#--------------------------------------------------------------------------------------------
+# Default port is 8761
+#
+# The "server.port" attribute sets the default port used for the Eureka service
+#
+# The "eureka.cliente.registerWithEureka" attribute tells the service not to register
+# with a Eureka service when the Spring Boot Eureka application starts because this is
+# the Eureka service.
+#
+# The "eureka.client.fetchRegistry" attribute is set to false so that when the Eureka
+# service starts, it doesn't try to cache its registry information locally. When running
+# a Eureka client, you'll want to change this value for the Spring Boot services that are
+# going to register Eureka.
+#
+# The last attribute "eureka.server.waitTimeInMsWhenSyncEmpty" is commented out.
+# When we're testing the service locally this line should be uncommented because Eureka
+# won't immediately advetise any services that register with it. It will wait five minutes
+# by default to give all of the services a chance to register with it before advertising
+# them. Uncommenting this line for local testting will help speed up the amount of time
+# it will take Eureka service to start and show services registered with it.
+#
+# Individual services registering will take up tp 30 seconds to show up in the Eureka
+# service because Eureka requires three consecutive hearbeat pings from the service spaced
+# 10 seconds apart before it will say the service is ready for use. Keep this in mind as
+# you 're deploying and testing your own services.
+#--------------------------------------------------------------------------------------------
+
+server:
+  port: 8761                              # Port Eureka Server is going to listen on
+
+eureka:
+  client:
+    registerWithEureka: false             # Don't register with Eureka service
+    fetchRegistry: false                  # Don't cache registry information locally
+  server:
+    waitTimeInMsWhenSyncEmpty: 5          # Initial time to wait before server takes requests
+  serviceUrl:
+    defaultZone: http://localhost:8761

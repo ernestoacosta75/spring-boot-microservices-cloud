@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.8.RELEASE</version>
+    </parent>
+
+    <groupId>com.thoughtmechanix</groupId>
+    <artifactId>eurekasvr</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Eureka Server</name>
+    <description>Eureka Server Microservices Projects</description>
+
+    <properties>
+        <spring.cloud.dependencies.version>Greenwich.RELEASE</spring.cloud.dependencies.version>
+        <spring.cloud.eureka.starter.server.version>1.4.7.RELEASE</spring.cloud.eureka.starter.server.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.enforcer.plugin.version>3.0.0-M2</maven.enforcer.plugin.version>
+        <start-class>com.thoughtmechanix.eurekasvr.EurekaServerApplication</start-class>
+        <java.version>1.8</java.version>
+        <docker.maven.plugin.version>0.4.10</docker.maven.plugin.version>
+        <docker.image.name>eara/tmx-eurekasvr</docker.image.name>
+        <docker.image.tag>chapter4</docker.image.tag>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Tells to the Maven build to include the Eureka libraries
+         (which wil include Ribbon).
+         Eureka is used for the service discovery engine and Ribbon libraries
+         are used for the client-side load balancing-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka-server</artifactId>
+            <version>${spring.cloud.eureka.starter.server.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-duplicate-dependencies-and-file-exists</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <banDuplicatePomDependencyVersions/>
+                                <requireFilesExist>
+                                    <files>
+                                        <file>${project.basedir}/src/main/docker/Dockerfile</file>
+                                        <file>${project.basedir}/src/main/docker/run.sh</file>
+                                    </files>
+                                </requireFilesExist>
+                            </rules>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>enforce-maven-and-java-version</id>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[3.3,)</version>
+                                    <message>Invalid Maven version. It should, at least, be 3.3.0</message>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>1.8</version>
+                                    <message>Invalid Java version. It should, at least, be 1.8</message>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- We use the Resources plugin to filer Dockerfile and run.sh, it inserts actual JAR filename -->
+            <!-- The final Dockerfile will be created in target/dockerfile/Dockerfile -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/dockerfile</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/docker</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.maven.plugin.version}</version>
+                <configuration>
+                    <imageName>${docker.image.name}:${docker.image.tag}</imageName>
+                    <dockerDirectory>${basedir}/target/dockerfile</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
