@@ -24,6 +24,7 @@
         <start-class>com.thoughtmechanix.licenses.Application</start-class>
         <spring.cloud.dependencies.version>Greenwich.RELEASE</spring.cloud.dependencies.version>
         <postgresql.version>9.1-901.jdbc4</postgresql.version>
+        <maven.enforcer.plugin.version>3.0.0-M2</maven.enforcer.plugin.version>
         <docker.maven.plugin.version>0.4.10</docker.maven.plugin.version>
         <docker.image.name>eara/tmx-licensing-service</docker.image.name>
         <docker.image.tag>chapter3</docker.image.tag>
@@ -73,7 +74,7 @@
       <artifactId>postgresql</artifactId>
       <version>${postgresql.version}</version>
     </dependency>
-      <dependency>
+    <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-rsa</artifactId>
     </dependency>
@@ -81,6 +82,45 @@
 
   <build>
      <plugins>
+         <plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-enforcer-plugin</artifactId>
+             <version>${maven.enforcer.plugin.version}</version>
+             <executions>
+                 <execution>
+                     <id>enforce-duplicate-dependencies-and-file-exists</id>
+                     <goals>
+                         <goal>enforce</goal>
+                     </goals>
+                     <configuration>
+                         <rules>
+                             <banDuplicatePomDependencyVersions/>
+                             <requireFilesExist>
+                                 <files>
+                                     <file>${project.basedir}/src/main/docker/Dockerfile</file>
+                                     <file>${project.basedir}/src/main/docker/run.sh</file>
+                                 </files>
+                             </requireFilesExist>
+                         </rules>
+                     </configuration>
+                 </execution>
+                 <execution>
+                     <id>enforce-maven-and-java-version</id>
+                     <configuration>
+                         <rules>
+                             <requireMavenVersion>
+                                 <version>3.3.3</version>
+                                 <message>Invalid Maven version. It should, at least, be 3.3.3</message>
+                             </requireMavenVersion>
+                             <requireJavaVersion>
+                                 <version>1.8</version>
+                                 <message>Invalid Java version. It should, at least, be 1.8</message>
+                             </requireJavaVersion>
+                         </rules>
+                     </configuration>
+                 </execution>
+             </executions>
+         </plugin>
          <!-- We use the Resources plugin to filer Dockerfile and run.sh, it inserts actual JAR filename -->
          <!-- The final Dockerfile will be created in target/dockerfile/Dockerfile -->
          <plugin>
