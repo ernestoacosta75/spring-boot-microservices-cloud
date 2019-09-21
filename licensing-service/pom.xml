@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.thoughtmechanix</groupId>
@@ -24,7 +22,8 @@
         <start-class>com.thoughtmechanix.licenses.Application</start-class>
         <spring.cloud.dependencies.version>Greenwich.RELEASE</spring.cloud.dependencies.version>
         <spring.cloud.eureka.starter.server.version>1.4.7.RELEASE</spring.cloud.eureka.starter.server.version>
-        <postgresql.version>9.1-901.jdbc4</postgresql.version>
+        <postgresql.version>42.2.5</postgresql.version>
+        <lombock.version>1.18.4</lombock.version>
         <maven.enforcer.plugin.version>3.0.0-M2</maven.enforcer.plugin.version>
         <docker.maven.plugin.version>0.4.10</docker.maven.plugin.version>
         <docker.image.name>eara/tmx-licensing-service</docker.image.name>
@@ -56,15 +55,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-config</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-config-client</artifactId>
-    </dependency>
 
       <!-- Includes the Eureka libraries so that the service
        can register with Eureka. These libraries holds the jar
@@ -75,20 +65,51 @@
           <version>${spring.cloud.eureka.starter.server.version}</version>
       </dependency>
 
+      <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-starter-feign</artifactId>
+          <version>${spring.cloud.eureka.starter.server.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-starter-config</artifactId>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-config-client</artifactId>
+      </dependency>
+
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>${postgresql.version}</version>
-    </dependency>
+      <dependency>
+          <groupId>org.postgresql</groupId>
+          <artifactId>postgresql</artifactId>
+          <version>${postgresql.version}</version>
+      </dependency>
+<!--
+      <dependency>
+          <groupId>postgresql</groupId>
+          <artifactId>postgresql</artifactId>
+          <version>9.1-901.jdbc4</version>
+      </dependency>
+-->
     <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-rsa</artifactId>
     </dependency>
+
+      <!-- Lombok -->
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>${lombock.version}</version>
+          <scope>provided</scope>
+      </dependency>
   </dependencies>
 
   <build>

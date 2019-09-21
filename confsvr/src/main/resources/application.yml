@@ -18,10 +18,10 @@ spring:
       server:
         encrypt.enabled: false
         git:
-          uri: https://github.com/carnellj/config-repo/
+          uri: https://github.com/ernestoacosta75/config-microservices-cloud-repo
           searchPaths: licensingservice,organizationservice
-          username: native-cloud-apps
-          password: 0ffended
+          username: ernestoacostacuba@yahoo.com.mx
+          password: Cbcoa1975
 
 
 ####

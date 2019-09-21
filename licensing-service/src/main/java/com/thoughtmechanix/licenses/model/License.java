@@ -1,10 +1,7 @@
 package com.thoughtmechanix.licenses.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "licenses")
@@ -30,6 +27,18 @@ public class License{
 
   @Column(name="comment")
   private String comment;
+
+  @Transient
+  private String organizationName = "";
+
+  @Transient
+  private String contactName = "";
+
+  @Transient
+  private String contactPhone = "";
+
+  @Transient
+  private String contactEmail = "";
 
 
   public Integer getLicenseMax() {
@@ -124,6 +133,35 @@ public class License{
     return this;
   }
 
+  public String getOrganizationName() {
+    return organizationName;
+  }
 
+  public void setOrganizationName(String organizationName) {
+    this.organizationName = organizationName;
+  }
 
+  public String getContactName() {
+    return contactName;
+  }
+
+  public void setContactName(String contactName) {
+    this.contactName = contactName;
+  }
+
+  public String getContactPhone() {
+    return contactPhone;
+  }
+
+  public void setContactPhone(String contactPhone) {
+    this.contactPhone = contactPhone;
+  }
+
+  public String getContactEmail() {
+    return contactEmail;
+  }
+
+  public void setContactEmail(String contactEmail) {
+    this.contactEmail = contactEmail;
+  }
 }

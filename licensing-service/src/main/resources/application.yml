@@ -1,0 +1,38 @@
+#------------------------------------------------------------------------------------------
+# After set up the pom.xml file, we need to tell Spring Boot to register
+# the organization service with Eureka. This registration is done via
+# additional configuration in this application file.
+#
+# Every service registered with Eureka will have two components associated
+# with it: the application ID and the instance ID. The application ID is
+# used to represent a group service instance. In a Spring-Boot-based microservice
+# the application ID will always be the value set by the "spring.application.name"
+# property that is defined in the bootstrap.yml file. For the organization service,
+# this property is creatively named "organizationservice". The instance ID will be
+# a random number meant to represent a single service instance.
+#
+# The second part of the configuration provides how and where the service should be
+# register with the Eureka service. The "eureka.instance.preferIpAddress" property
+# tells Eureka that you want to register the service's IP address to Eureka rather
+# than its hostname.
+#
+# The "eureka.client.registerWithEureka" attribute is the trigger to tell the orga-
+# nization service to register itself with Eureka. The "eureka.client.fetchRegistry"
+# attribute is used to tell the Spring Eureka Client to fetch a local copy of the registry.
+# Setting this attribute to true will cache the registry locally instead of calling the Eureka
+# service with every lookup. Every 30 seconds, the client software will re-contact the
+# Eureka service for any changes to the registry.
+#
+# The last attribute, the eureka.serviceUrl.defaultZone attribute, holds a comma-separated list
+# of Eureka services the client will use to resolve to service locations. For our purposes,
+# you’re only going to have one Eureka service.
+#----------------------------------------------------------------------------------------------
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
