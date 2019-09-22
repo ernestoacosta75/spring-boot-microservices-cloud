@@ -86,15 +86,17 @@ public class LicenseServiceImpl implements LicenseService {
             case "feign":
                 break;
             case "rest":
+                log.info("Using the rest client");
+                organization = organizationRestTemplateClient.getOrganization(organizationId);
                 break;
             case "discovery":
                 log.info("Using the discovery client");
                 organization = organizationDiscoveryClient.getOrganization(organizationId);
                 break;
             default:
-                log.info("Using the rest client");
+                organization = organizationRestTemplateClient.getOrganization(organizationId);
         }
 
-        return null;
+        return organization;
     }
 }
