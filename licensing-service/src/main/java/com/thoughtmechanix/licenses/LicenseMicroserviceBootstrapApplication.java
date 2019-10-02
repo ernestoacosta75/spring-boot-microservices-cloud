@@ -30,9 +30,7 @@ import org.springframework.web.client.RestTemplate;
  * @author Ernesto A. Rodriguez Acosta
  */
 @SpringBootApplication
-//@EnableDiscoveryClient
 @RefreshScope
-//@EnableFeignClients
 @EnableEurekaClient
 @EnableCircuitBreaker
 public class LicenseMicroserviceBootstrapApplication {

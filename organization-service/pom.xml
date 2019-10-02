@@ -24,7 +24,7 @@
         <spring.cloud.eureka.starter.server.version>1.4.7.RELEASE</spring.cloud.eureka.starter.server.version>
         <postgresql.version>42.2.5</postgresql.version>
         <docker.image.name>eara/tmx-organization-service</docker.image.name>
-        <docker.image.tag>chapter4</docker.image.tag>
+        <docker.image.tag>chapter5</docker.image.tag>
     </properties>
 
     <dependencyManagement>

@@ -1,12 +1,9 @@
 package com.thoughtmechanix.licenses.services.impl;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.thoughtmechanix.licenses.clients.OrganizationDiscoveryClient;
-import com.thoughtmechanix.licenses.clients.OrganizationFeignClient;
 import com.thoughtmechanix.licenses.clients.OrganizationRestTemplateClient;
 import com.thoughtmechanix.licenses.config.ServiceConfig;
 import com.thoughtmechanix.licenses.model.License;
-import com.thoughtmechanix.licenses.model.Organization;
 import com.thoughtmechanix.licenses.repository.LicenseRepository;
 import com.thoughtmechanix.licenses.services.LicenseService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,12 +36,6 @@ public class LicenseServiceImpl implements LicenseService {
     ServiceConfig config;
 
     @Autowired
-    OrganizationDiscoveryClient organizationDiscoveryClient;
-
-    @Autowired
-    OrganizationFeignClient organizationFeignClient;
-
-    @Autowired
     OrganizationRestTemplateClient organizationRestTemplateClient;
 
     @Override
@@ -65,18 +56,7 @@ public class LicenseServiceImpl implements LicenseService {
 
     @Override
     public License getLicensesWithClient(String organizationId, String licenseId, String clientType) {
-        License license = licenseRepository
-                            .findByOrganizationIdAndLicenseId(organizationId, licenseId);
-
-        Organization organization = retrieveOrgInfo(organizationId, clientType);
-
-        license.setOrganizationName(organization.getName());
-        license.setContactName(organization.getContactName());
-        license.setContactEmail(organization.getContactEmail());
-        license.setContactPhone(organization.getContactPhone());
-        license.setComment(config.getExampleProperty());
-
-        return license;
+        return null;
     }
 
     @Override
@@ -94,29 +74,6 @@ public class LicenseServiceImpl implements LicenseService {
     @Override
     public void deleteLicense(License license){
         licenseRepository.deleteById( license.getLicenseId());
-    }
-
-    private Organization retrieveOrgInfo(String organizationId, String clientType) {
-        Organization organization = null;
-
-        switch (clientType) {
-            case "feign":
-                log.info("Using the feign client");
-                organization = organizationFeignClient.getOrganization(organizationId);
-                break;
-            case "rest":
-                log.info("Using the rest client");
-                organization = organizationRestTemplateClient.getOrganization(organizationId);
-                break;
-            case "discovery":
-                log.info("Using the discovery client");
-                organization = organizationDiscoveryClient.getOrganization(organizationId);
-                break;
-            default:
-                organization = organizationRestTemplateClient.getOrganization(organizationId);
-        }
-
-        return organization;
     }
 
     /**
