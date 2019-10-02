@@ -22,6 +22,7 @@
         <start-class>com.thoughtmechanix.licenses.LicenseMicroserviceBootstrapApplication</start-class>
         <spring.cloud.dependencies.version>Greenwich.RELEASE</spring.cloud.dependencies.version>
         <spring.cloud.eureka.starter.server.version>1.4.7.RELEASE</spring.cloud.eureka.starter.server.version>
+        <hystrix.javanica.version>1.5.9</hystrix.javanica.version>
         <postgresql.version>42.2.5</postgresql.version>
         <lombock.version>1.18.4</lombock.version>
         <swagger2.springfox.version>2.8.0</swagger2.springfox.version>
@@ -71,6 +72,20 @@
           <groupId>org.springframework.cloud</groupId>
           <artifactId>spring-cloud-starter-feign</artifactId>
           <version>${spring.cloud.eureka.starter.server.version}</version>
+      </dependency>
+
+      <!-- Spring Cloud Hystrix -->
+      <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-starter-hystrix</artifactId>
+          <version>${spring.cloud.eureka.starter.server.version}</version>
+      </dependency>
+
+      <!-- Netflix Hystrix core libraries -->
+      <dependency>
+          <groupId>com.netflix.hystrix</groupId>
+          <artifactId>hystrix-javanica</artifactId>
+          <version>${hystrix.javanica.version}</version>
       </dependency>
 
       <dependency>
