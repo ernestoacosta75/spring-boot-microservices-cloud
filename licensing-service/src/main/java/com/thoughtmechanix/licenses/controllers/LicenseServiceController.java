@@ -3,10 +3,7 @@ package com.thoughtmechanix.licenses.controllers;
 import com.thoughtmechanix.licenses.config.ServiceConfig;
 import com.thoughtmechanix.licenses.model.License;
 import com.thoughtmechanix.licenses.services.LicenseService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value="v1/organizations/{organizationId}/licenses")
+@Api(value = "v1/organizations/{organizationId}/licenses")
 public class LicenseServiceController {
     @Autowired
     private LicenseService licenseService;
