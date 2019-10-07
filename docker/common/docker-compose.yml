@@ -26,31 +26,18 @@ services:
     image: eara/tmx-licensing-service:chapter5
     ports:
       - "8080:8080"
+      - "8090:8090"
     environment:
       PROFILE: "default"
       SERVER_PORT: "8080"
       CONFIGSERVER_URI: "http://configserver:8888"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
-      EUREKASERVER_PORT:   "8761"
       CONFIGSERVER_PORT:   "8888"
       DATABASESERVER_PORT: "5432"
+      EUREKASERVER_PORT:   "8761"
       ENCRYPT_KEY:       "IMSYMMETRIC"
 
   organizationservice:
-    image: eara/tmx-organization-service:chapter5
-    ports:
-      - "8085:8085"
-    environment:
-      PROFILE: "default"
-      SERVER_PORT: "8085"
-      CONFIGSERVER_URI: "http://configserver:8888"
-      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
-      EUREKASERVER_PORT:   "8761"
-      CONFIGSERVER_PORT:   "8888"
-      DATABASESERVER_PORT: "5432"
-      ENCRYPT_KEY:       "IMSYMMETRIC"
-
-  organizationservice2:
     image: eara/tmx-organization-service:chapter5
     ports:
       - "8086:8086"
@@ -59,7 +46,7 @@ services:
       SERVER_PORT: "8085"
       CONFIGSERVER_URI: "http://configserver:8888"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
-      EUREKASERVER_PORT:   "8761"
       CONFIGSERVER_PORT:   "8888"
       DATABASESERVER_PORT: "5432"
+      EUREKASERVER_PORT:   "8761"
       ENCRYPT_KEY:       "IMSYMMETRIC"

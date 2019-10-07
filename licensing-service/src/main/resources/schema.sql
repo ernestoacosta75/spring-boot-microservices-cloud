@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS 'licenses';
+DROP TABLE IF EXISTS licenses;
 
-CREATE TABLE 'licenses' (
+CREATE TABLE licenses (
   license_id        VARCHAR(100) PRIMARY KEY NOT NULL,
   organization_id   TEXT NOT NULL,
   license_type      TEXT NOT NULL,
